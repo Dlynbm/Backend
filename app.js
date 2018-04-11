@@ -9,7 +9,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 
-
 app.get('/greetings/:title', function(req, res){
     const title = req.params.title;
     //res.render();
@@ -18,12 +17,11 @@ app.get('/greetings/:title', function(req, res){
 
 app.post('/new-user', function(req, res){
     const userid = req.body.userid;
-    const firstName = req.body.firstname;
-    const lastName = req.body.lastname;
+    const name = req.body.name;
     const email = req.body.email;
     const age = req.body.age;
     console.log(req.body);
-    res.render('confirm', {userid: userid, firstName:firstName, lastName:lastName, email:email, age: age });
+    res.render('confirm', {userid: userid, name:name, email:email, age: age });
 });
 
 function goBack() {

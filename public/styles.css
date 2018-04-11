@@ -1,0 +1,21 @@
+body {
+    background-color: lightblue;
+}
+
+table {
+
+
+}
+
+th {
+    color: black;
+    text-decoration: underline;
+}
+
+tr{
+    color: white;
+}
+
+.buttons {
+    padding-left: 55px;
+}

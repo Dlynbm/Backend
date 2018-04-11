@@ -1,12 +1,26 @@
 html
     head
-        title!='User confirmation Page'
+        <link rel="stylesheet" href="/styles.css">
+        title='User confirmation Page'
     body
-        userid!=userid
-        firstname!=firstName
-        lastname!=lastName
-        email!=email
-        age!=age
+        table
+            tr
+                th User Id:
+                th Name:
+                th Email:
+                th Age:
+            tr
+                div.userinfo
+                    td= userid
+                    td= name
+                    td=email
+                    td=age
+
+                        div.buttons
+                            <input type="submit" contenteditable="true" value="Edit">
+                            <input type='submit', value='Delete', onClick='deleteThis(#{users})'>
 
 
+                                button(href='/title')
+                                    a(href='/title') Add another user
 
