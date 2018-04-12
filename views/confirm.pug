@@ -9,18 +9,22 @@ html
                 th Name:
                 th Email:
                 th Age:
+                th Edit User Info
+                th Delete User
+                th Add New User
             tr
-                div.userinfo
-                    td= userid
-                    td= name
-                    td=email
-                    td=age
+            each user in users
+                    td= user.userid
+                    td= user.name
+                    td= user.email
+                    td= user.age
 
-                        div.buttons
-                            <input type="submit" contenteditable="true" value="Edit">
-                            <input type='submit', value='Delete', onClick='deleteThis(#{users})'>
+                    td
+                        <input type="submit" value="Edit">
+                    td
+                        <input type='submit', value='Delete'>
 
-
-                                button(href='/title')
-                                    a(href='/title') Add another user
+                    td
+                        button.addUser
+                            a(href='/index.html') Add user
 

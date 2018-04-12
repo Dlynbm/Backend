@@ -1,21 +1,69 @@
-body {
+body, html {
     background-color: lightblue;
+    padding:0;
+    width: 100%;
+    margin: 0;
+    height: auto;
+
 }
 
 table {
+    border-collapse: collapse;
+    margin: 15px auto 15px 5px;
+    background-color: lightgrey;
+    display: flex;
+    flex-direction: row;
 
 
 }
 
-th {
-    color: black;
-    text-decoration: underline;
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
 }
 
 tr{
     color: white;
 }
 
-.buttons {
-    padding-left: 55px;
+th{
+    height: 50px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    cursor:pointer;
+}
+
+.form{
+    font-size: 20px;
+    display: flex;
+    width:35%;
+    height: 225px;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 10px;
+
+}
+
+input {
+    border: none;
+    font-size: 15px;
+    height: 25px;
+    padding-left: 5px;
+}
+
+button {
+    width: 85px;
+    height: 35px;
+    margin: 20px;
+    background-color: lightgrey;
+    font-size: 15px;
+}
+button:hover{
+    background-color: white;
+    color:black;
+
 }
