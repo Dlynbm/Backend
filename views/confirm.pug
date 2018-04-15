@@ -1,7 +1,6 @@
 html
     head
-        <link rel="stylesheet" href="/styles.css">
-        title='User confirmation Page'
+        <link rel="stylesheet" href="./styles.css">
     body
         table
             tr
@@ -9,22 +8,19 @@ html
                 th Name:
                 th Email:
                 th Age:
-                th Edit User Info
-                th Delete User
-                th Add New User
             tr
             each user in users
+                tr
                     td= user.userid
                     td= user.name
                     td= user.email
                     td= user.age
+                    td
+                        a(href="/edit" + user.id) Edit
+                    td
+                        a(href="/delete" + user.id) Delete
 
-                    td
-                        <input type="submit" value="Edit">
-                    td
-                        <input type='submit', value='Delete'>
 
-                    td
-                        button.addUser
-                            a(href='/index.html') Add user
+    div
+        a(href='/') Add another user
 

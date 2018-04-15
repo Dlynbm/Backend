@@ -16,6 +16,15 @@ app.get('/new-user', function(req, res){
 });
 
 
+app.get('/delete/:allUsers', (req, rest) => {
+    for(let i = 0; i < allUsers.length; i++){
+        if(allUsers[i].id == req.params.userid) {
+            allUsers.splice(i,1);
+        }
+    }
+});
+
+
 app.post('/new-user', function(req, res){
     let individualUser = {
             userid: req.body.userid,
@@ -28,7 +37,9 @@ app.post('/new-user', function(req, res){
     res.render('confirm', {users: allUsers });
 });
 
-//app.delete('/new-user, function(req, res){
+
+
+
 
 
 
