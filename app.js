@@ -58,11 +58,11 @@ app.post('/edit', (req, res) => {
         id: req.body.id
     };
     for(let i = 0; i < allUsers.length; i++){
-        if(+req.body.id === allUsers[i].id){
+        if(req.body.id === allUsers[i].userid){
             allUsers[i] = userEdit;
         }
     }
-    //res.render('users', {users:allUsers});
+    res.render('users', {users:allUsers});
 });
 
 
