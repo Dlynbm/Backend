@@ -64,17 +64,18 @@ app.post('/edit', (req, res) => {
             allUsers[i] = userEdit;
         }
     }
-    res.render('users', {users:allUsers});
+    res.render('confirm', {users:allUsers});
 });
 
-app.get('/delete/:userid', (req, resp) => {
+app.get('/delete/:userid', (req, res) => {
+    console.log('delete user');
     for(let i = 0; i < allUsers.length; i++){
         if(req.params.userid === allUsers[i].userid) {
             allUsers.splice(i,1);
         }
     }
     //resp.end('/');
-    resp.render('confirm');
+    res.render('confirm', {users: allUsers });
 
 });
 

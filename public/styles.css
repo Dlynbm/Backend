@@ -67,3 +67,21 @@ button:hover{
     color:black;
 
 }
+
+.edit-cell {
+    border: none;
+    font-size: 15px;
+    height: 25px;
+    padding: 5px;
+}
+
+.edit-cell:hover {
+    background-color: lightgrey;
+}
+
+.save-changes {
+    width: 85px;
+    height: 35px;
+    margin: 20px;
+    font-size: 15px;
+}

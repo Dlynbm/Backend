@@ -1,27 +1,26 @@
-doctype html
 html
     head
-            title Edit User
-
+        title Edit User
+        link(rel='stylesheet' href='/styles.css')
     body
         form(method='post', action='/edit')
 
-            div
+            div(class='edit-cell')
                 label(for='userid') User ID:
                 input(id='userid', name='userid' value=user.userid)
 
-            div
+            div(class='edit-cell')
                 label(for='name') Name:
                 input(id='name', name='name' value=user.name)
 
-            div
+            div(class='edit-cell')
                 label(for='email') Email:
                 input(id='email', name='email' value=user.email)
 
-            div
+            div(class='edit-cell')
                 label(for='age') Age:
                 input(id='age', name='age' value=user.age)
 
-            div
+            div(class='save-changes')
                 input(type='submit', value='Save Changes')
 
