@@ -2,11 +2,12 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+const mongo = require('mongodb');
 
 let allUsers =[{userid: '001', name: 'Chad Payne', email: 'padarak@live.com', age: '45'},
-                {userid: '002', name: 'Lynn Payne', email:'lynpayne@hotmail.com', age:'42'},
-                {userid: '003', name: 'Chad Meyer', email:'brotherpayne@live.com', age:'24'},
-                {userid: '004', name: 'Cheynne Beck', email:'cheybeck@gmail.com', age:'13' },
+                {userid: '002', name: 'Drew Payne', email:'lynpayne@hotmail.com', age:'42'},
+                {userid: '003', name: 'Tom Meyer', email:'drewpayne@live.com', age:'24'},
+                {userid: '004', name: 'Sheynne Beck', email:'cheybeck@gmail.com', age:'13' },
                 {userid: '005', name: 'Cass Haynie', email:'cassidye@gmail.com', age:'18'},
                 {userid: '006', name: 'Shelby Day', email: 'dayshelb@live.com', age:'24'},
                 {userid: '007', name: 'Lori Night', email: 'lknight@hotmail.com', age:'55'},
@@ -50,8 +51,9 @@ app.get('/edit/:id', (req, res) => {
     }
 });
 
-
-app.post('/edit', (req, res) => {
+app.post('/edit', function(req, res){
+    console.log(req.body.name);
+    console.log(req.body.userid);
     let userEdit = {
         userid: req.body.userid,
         name: req.body.name,
@@ -60,7 +62,7 @@ app.post('/edit', (req, res) => {
         id: req.body.id
     };
     for(let i = 0; i < allUsers.length; i++){
-        if(req.body.id === allUsers[i].userid){
+        if(req.body.userid === allUsers[i].userid){
             allUsers[i] = userEdit;
         }
     }
