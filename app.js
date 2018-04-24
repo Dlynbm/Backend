@@ -2,6 +2,19 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+const MongoClient = require('mongodb').MongoClient;
+
+const url = 'mongodb://localhost:27017/dlyn';
+
+MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    const dbo = db.db('dlyn');
+    dbo.createCollection("users", function (err, res) {
+        if (err) throw err;
+        console.log("Collection created");
+        db.close();
+    });
+});
 
 let allUsers =[{userid: '001', name: 'Chad Payne', email: 'padarak@live.com', age: '45'},
                 {userid: '002', name: 'Drew Payne', email:'lynpayne@hotmail.com', age:'42'},
