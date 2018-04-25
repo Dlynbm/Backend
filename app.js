@@ -40,16 +40,20 @@ app.get('/new-user', function(req, res){
 });
 
 
-app.post('/new-user', function(req, res){
+app.post('/new-user', function(req, res) {
     let individualUser = {
-            userid: req.body.userid,
-            name: req.body.name,
-            email: req.body.email,
-            age: req.body.age
+        userid: req.body.userid,
+        name: req.body.name,
+        email: req.body.email,
+        age: req.body.age
     };
-    allUsers.push(individualUser);
-    console.log(req.body);
-    res.render('confirm', {users: allUsers });
+    dbo.collection("users").insertOne(individualUser, function (err, res) {
+        if (err) throw err;
+        console.log("1 user added");
+        allUsers.push(individualUser);
+        console.log(req.body);
+        res.render('confirm', {users: allUsers});
+    });
 });
 
 app.get('/edit/:id', (req, res) => {
