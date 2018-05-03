@@ -3,6 +3,17 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
+
+const userSchema = mongoose.Schema({
+    userid: String,
+    name: String,
+    email: String,
+    age: Number,
+
+});
+
+const User = mongoose.model('User', userSchema);
 
 const url = 'mongodb://localhost:27017/dlyn';
 
@@ -47,14 +58,10 @@ app.post('/new-user', function(req, res) {
         email: req.body.email,
         age: req.body.age
     };
-    dbo.collection("users").insertOne(individualUser, function (err, res) {
-        if (err) throw err;
-        console.log("1 user added");
-        allUsers.push(individualUser);
-        console.log(req.body);
-        res.render('confirm', {users: allUsers});
+    allUsers.push(individualUser);
+    console.log(req.body);
+    res.render('confirm', {users: allUsers });
     });
-});
 
 app.get('/edit/:id', (req, res) => {
     console.log('edit user' + req.params.id);
