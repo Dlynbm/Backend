@@ -11,9 +11,9 @@ html
             tr
             each user in users
                 tr
-                    td= user.userid
-                    td= user.name
-                    td= user.email
+                    td= user.individualuser.userid
+                    td= user.individualuser.name
+                    td= user.individualuser.email
                     td= user.age
                     td
                         a(href='/edit/' + user.userid) Edit
