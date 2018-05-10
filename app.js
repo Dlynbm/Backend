@@ -30,17 +30,7 @@ MongoClient.connect(url, function(err, db) {
     });
 });
 
-let allUsers =[{userid: '001', name: 'Chad Payne', email: 'padarak@live.com', age: '45'},
-                //{userid: '002', name: 'Drew Payne', email:'lynpayne@hotmail.com', age:'42'},
-                //{userid: '003', name: 'Tom Meyer', email:'drewpayne@live.com', age:'24'},
-                //{userid: '004', name: 'Sheynne Beck', email:'cheybeck@gmail.com', age:'13' },
-                //{userid: '005', name: 'Cass Haynie', email:'cassidye@gmail.com', age:'18'},
-                //{userid: '006', name: 'Shelby Day', email: 'dayshelb@live.com', age:'24'},
-                //{userid: '007', name: 'Lori Night', email: 'lknight@hotmail.com', age:'55'},
-                //{userid: '008', name: 'Ashely Hoyal', email:'ashhoyal@live.com', age:'24'},
-                //{userid: '009', name: 'Bob Whitaker', email: 'bobby@gmail.com', age: '66'},
-                //userid: '010', name: 'Thomas Barker', email: 'tbarkers@live.com', age: '46'}
-];
+let allUsers =[{userid: '001', name: 'Chad Payne', email: 'padarak@live.com', age: '45'}];
 let user;
 
 app.use(express.static('public'));
@@ -96,15 +86,22 @@ app.post('/update', function(req, res, next) {
 });
 
 app.get('/delete/:id', function(req, res) {
+    MongoClient.connect(url, function (err, client) {
+        const db = client.db(dbName);
+        const collection = db.collection('users');
+        collection.deleteOne({'individualuser.userid': req.params.id}, function (err, result) {
+            console.log('user deleted');
 
-    // MongoClient.connect(url, function(err, client) {
-    //     const db = client.db(dbName);
-    //     const collection=db.collection('users');
-    //     db.collection.deleteOne({individualuser}, function(err, result) {
-    //     console.log('user deleted');
-    //     client.close();
-    //     res.render('confirm')
-    // });
+        });
+        collection.find({}).toArray(function(err, docs) {
+            console.log("Found the following records");
+            console.log(docs);
+            res.render('confirm', ({
+                users: docs
+            }));
+            client.close();
+        });
+    });
 });
 
 

@@ -14,11 +14,11 @@ html
                     td= user.individualuser.userid
                     td= user.individualuser.name
                     td= user.individualuser.email
-                    td= user.age
+                    td= user.individualuser.age
                     td
-                        a(href='/edit/' + user.userid) Edit
+                        a(href='/edit/' + user.individualuser.userid) Edit
                     td
-                        a(href='/delete/' + user.userid) Delete
+                        a(href='/delete/' + user.individualuser.userid) Delete
 
 
     div
