@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
-const mongodb = require('mongodb');
+const objectId = require('mongodb').ObjectId;
 const dbName = 'dlyn';
 
 
@@ -38,7 +38,7 @@ app.set('view engine', 'pug');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-//new code starts here
+
 
 //get user data
 app.get('/get-data', function(req, res, next) {
@@ -55,128 +55,98 @@ app.get('/get-data', function(req, res, next) {
     });
 });
 
+//create new user
 app.post('/new-user', function(req, res, next) {
-const individualuser = {
-    userid: req.body.userid,
-    name: req.body.name,
-    email: req.body.email,
-    age: req.body.age
-};
-MongoClient.connect(url, function(err, client) {
-    const db = client.db(dbName);
-    const collection = db.collection('users');
-    db.collection('users').insertOne({individualuser}, function(err, result) {
-        console.log("item inserted");
-        client.close();
-    });
-    collection.find({}).toArray(function(err, docs) {
-        console.log("Found the following records");
-        console.log(docs);
-        res.render('confirm', ({
-            users: docs
-        }));
-    });
-});
-});
-
-
-
-app.post('/update', function(req, res, next) {
-
-});
-
-app.get('/delete/:id', function(req, res) {
+    const individualuser = {
+        userid: req.body.userid,
+        name: req.body.name,
+        email: req.body.email,
+        age: req.body.age
+    };
     MongoClient.connect(url, function (err, client) {
         const db = client.db(dbName);
         const collection = db.collection('users');
-        collection.deleteOne({'individualuser.userid': req.params.id}, function (err, result) {
-            console.log('user deleted');
-
+        db.collection('users').insertOne({individualuser}, function (err, result) {
+            console.log("item inserted");
+            client.close();
         });
-        collection.find({}).toArray(function(err, docs) {
+        collection.find({}).toArray(function (err, docs) {
             console.log("Found the following records");
             console.log(docs);
             res.render('confirm', ({
                 users: docs
             }));
-            client.close();
         });
     });
 });
 
+//get edit pug file
+    app.get('/edit/:edit', function (req, res, next) {
+
+        MongoClient.connect(url, function (err, client) {
+            const db = client.db(dbName);
+            const collection = db.collection('users');
+            collection.find({'individualuser.userid': req.params.edit}).toArray(function (err, docs) {
+                console.log("Found one user");
+                console.log(docs);
+                res.render('edit', ({
+                    users: docs
+                }));
+                client.close();
+            });
+        });
+    });
+
+//edit and update data
+        app.post('/edit', function (req, res, next) {
+            const individualuser = {
+                userid: req.body.userid,
+                name: req.body.name,
+                email: req.body.email,
+                age: req.body.age
+            };
+            const id = req.body.individualuser;
+            MongoClient.connect(url, function (err, client) {
+                const db = client.db(dbName);
+                const collection = db.collection('users');
+                collection.updateOne({'individualuser.userid': req.body.userid, individualuser}, function (err, docs) {
+                    collection.find({}).toArray(function (err, docs) {
+                        console.log("Found the following records");
+                        console.log(docs);
+                        res.render('confirm', ({
+                            users: docs
+                        }));
+                        client.close();
+                    });
+                });
+            });
+        });
+
+//delete data
+            app.get('/delete/:id', function (req, res) {
+                MongoClient.connect(url, function (err, client) {
+                    const db = client.db(dbName);
+                    const collection = db.collection('users');
+                    collection.deleteOne({'individualuser.userid': req.params.id}, function (err, result) {
+                        console.log('user deleted');
+
+                    });
+                    collection.find({}).toArray(function (err, docs) {
+                        console.log("Found the following records");
+                        console.log(docs);
+                        res.render('confirm', ({
+                            users: docs
+                        }));
+                        client.close();
+                    });
+                });
+            });
+
+            app.listen(4200, function () {
+                console.log('the app is running');
+            });
 
 
-//new code ends here
 
 
-
-
-
-
-
-
-
-
-// app.get('/new-user', function(req, res){
-//     res.render('/new-user');
-// });
-
-
-// app.post('/new-user', function(req, res) {
-//     let individualUser = {
-//         userid: req.body.userid,
-//         name: req.body.name,
-//         email: req.body.email,
-//         age: req.body.age
-//     };
-//     allUsers.push(individualUser);
-//     console.log(req.body);
-//     res.render('confirm', {users: allUsers });
-//     });
-
-// app.get('/edit/:id', (req, res) => {
-//     console.log('edit user' + req.params.id);
-//     let userInfo;
-//     for(let i = 0; i < allUsers.length; i++){
-//         if(req.params.id === allUsers[i].userid){
-//             userInfo = allUsers[i];
-//             res.render('./edit', {user: userInfo});
-//         }
-//     }
-// });
-//
-// app.post('/edit', function(req, res){
-//     console.log(req.body.name);
-//     console.log(req.body.userid);
-//     let userEdit = {
-//         userid: req.body.userid,
-//         name: req.body.name,
-//         email: req.body.email,
-//         age: req.body.age,
-//         id: req.body.id
-//     };
-//     for(let i = 0; i < allUsers.length; i++){
-//         if(req.body.userid === allUsers[i].userid){
-//             allUsers[i] = userEdit;
-//         }
-//     }
-//     res.render('confirm', {users:allUsers});
-// });
-//
-// app.get('/delete/:userid', (req, res) => {
-//     console.log('delete user');
-//     for(let i = 0; i < allUsers.length; i++){
-//         if(req.params.userid === allUsers[i].userid) {
-//             allUsers.splice(i,1);
-//         }
-//     }
-//     //resp.end('/');
-//     res.render('confirm', {users: allUsers });
-//
-// });
-
-
-app.listen(4200, function() {
-    console.log('the app is running');
-});
 
